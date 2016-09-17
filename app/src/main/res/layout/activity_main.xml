@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".utils.MainActivity">
 
     <ListView
         android:id="@+id/list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:dividerHeight="1dp"
-        tools:context="com.example.weaver.todolist.MainActivity"/>
+        android:divider="#ffeeeeee"
+        android:dividerHeight="1dp" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -20,4 +21,4 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/spacing_medium"/>
 
-</FrameLayout>
+</android.support.design.widget.CoordinatorLayout>

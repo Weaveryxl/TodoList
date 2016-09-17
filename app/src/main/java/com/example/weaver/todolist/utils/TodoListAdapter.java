@@ -1,4 +1,4 @@
-package com.example.weaver.todolist;
+package com.example.weaver.todolist.utils;
 
 import android.content.Context;
 import android.util.Log;
@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.example.weaver.todolist.R;
 import com.example.weaver.todolist.models.Todo;
 
 import java.util.List;
