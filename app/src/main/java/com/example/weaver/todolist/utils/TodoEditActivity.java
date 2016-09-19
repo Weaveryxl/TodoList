@@ -60,11 +60,17 @@ public class TodoEditActivity extends AppCompatActivity implements
     }
 
     private void setupUI(){
-        setContentView(R.layout.activity_edit_todo);
+        setContentView(R.layout.);
         setupActionbar();
 
-        todoEdit = (EditText) findViewById(R.id.to)
-                //continue here
+        todoEdit = (EditText) findViewById(R.id.todo_detail_todo_edit);
+        dateTv = (TextView) findViewById(R.id.todo_detail_date);
+        timeTv = (TextView) findViewById(R.id.todo_detail_time);
+        completeCb = (CheckBox) findViewById(R.id.todo_detial_complete);
+
+        if (todo != null){
+            //continue here
+        }
     }
 
 }
