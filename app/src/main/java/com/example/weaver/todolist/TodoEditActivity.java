@@ -20,6 +20,7 @@ import android.widget.TimePicker;
 
 import com.example.weaver.todolist.R;
 import com.example.weaver.todolist.models.Todo;
+import com.example.weaver.todolist.utils.AlarmUtils;
 import com.example.weaver.todolist.utils.DateUtils;
 import com.example.weaver.todolist.utils.UIUtils;
 
@@ -199,6 +200,10 @@ public class TodoEditActivity extends AppCompatActivity implements
         }
 
         todo.done = completeCb.isChecked();
+
+        if (remindDate != null) {
+            AlarmUtils.setAlarm(this, remindDate);
+        }
 
         Intent result = new Intent();
         result.putExtra(KEY_TODO, todo);
