@@ -79,8 +79,8 @@ public class TodoEditActivity extends AppCompatActivity implements
 
     private void setupActionbar() {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setElevation(0);
-        setTitle(null);
+        getSupportActionBar().setElevation(0); // this will work in android 5.0+
+        setTitle(null);                        // to previous versions, use style
     }//check here
 
     private void setupUI(){
