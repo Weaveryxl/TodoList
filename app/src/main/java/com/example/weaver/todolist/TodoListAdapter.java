@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * Created by Weaver on 2016/9/5.
  */
-public class TodoListAdapter extends BaseAdapter{
+public class TodoListAdapter extends ViewHolderAdapter{
 
     private MainActivity activity;
     private List<Todo> data;
@@ -44,7 +44,7 @@ public class TodoListAdapter extends BaseAdapter{
     public long getItemId(int position) {
         return position;
     }
-
+    /*
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         Viewholder vh;
@@ -87,9 +87,47 @@ public class TodoListAdapter extends BaseAdapter{
 
         return convertView;
     }
+    */
+    @Override
+    protected ViewHolderAdapter.ViewHolder onCreateViewHolder(int position, ViewGroup parent) {
+        View view = LayoutInflater.from(activity).inflate(R.layout.todo_list_item, parent, false);
+        return new TodoViewHolder(view);
+    }
 
-    private static class Viewholder{
+    @Override
+    protected void onBindViewHolder(final int position, ViewHolder viewHolder) {
+        final Todo todo = data.get(position);
+        TodoViewHolder vh = ((TodoViewHolder) viewHolder);
+        vh.todoText.setText(todo.text);
+        vh.doneCheckbox.setChecked(todo.done);
+        UIUtils.setTextViewStrikeThrough(vh.todoText, todo.done);
+
+        vh.doneCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                activity.updateTodo(position, isChecked);
+            }
+        });
+
+        vh.view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(activity, TodoEditActivity.class);
+                intent.putExtra(TodoEditActivity.KEY_TODO, todo);
+                activity.startActivityForResult(intent, MainActivity.REQ_CODE_TODO_EDIT);
+            }
+        });
+    }
+
+    private static class TodoViewHolder extends ViewHolderAdapter.ViewHolder{
         TextView todoText;
         CheckBox doneCheckbox;
+
+        public TodoViewHolder(View view) {
+            super(view);
+            todoText = (TextView) view.findViewById(R.id.to_do_list_text);
+            doneCheckbox = (CheckBox) view.findViewById(R.id.todo_list_item_check);
+        }
+
     }
 }
