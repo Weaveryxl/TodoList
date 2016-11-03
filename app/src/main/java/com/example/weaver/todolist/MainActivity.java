@@ -13,10 +13,12 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.example.weaver.todolist.models.Todo;
+import com.example.weaver.todolist.utils.AlarmUtils;
 import com.example.weaver.todolist.utils.ModelUtils;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     public static final int REQ_CODE_TODO_EDIT = 100;
 
     private static final String TODOS = "todos";
+
+    private static final String NOTIFICATIONS = "notifications";
 
     private TodoListAdapter adapter;
     private List<Todo> todos;
@@ -82,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
         adapter.notifyDataSetChanged();
         ModelUtils.save(this, TODOS, todos);
+        ModelUtils.save(this, NOTIFICATIONS, AlarmUtils.hashMap);
     }
 
     public void updateTodo(int index, boolean done) {
@@ -89,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
         adapter.notifyDataSetChanged();
         ModelUtils.save(this, TODOS, todos);
+        ModelUtils.save(this, NOTIFICATIONS, AlarmUtils.hashMap);
     }
 
     private void deleteTodo(@NonNull String todoId) {
@@ -102,10 +108,12 @@ public class MainActivity extends AppCompatActivity {
 
         adapter.notifyDataSetChanged();
         ModelUtils.save(this, TODOS, todos);
+        ModelUtils.save(this, NOTIFICATIONS, AlarmUtils.hashMap);
     }
 
     private void loadData() {
         todos = ModelUtils.read(this, TODOS, new TypeToken<List<Todo>>(){});
+        todos = ModelUtils.read(this, NOTIFICATIONS, new TypeToken<HashMap<Integer, Integer>>(){});
         if (todos == null) {
             todos = new ArrayList<>();
         }

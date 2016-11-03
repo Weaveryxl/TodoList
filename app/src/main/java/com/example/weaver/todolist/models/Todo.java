@@ -19,11 +19,14 @@ public class Todo implements Parcelable{
 
     public Date remindDate;
 
-    public Todo(String text, Date remindDate){
+    public int int_id;
+
+    public Todo(String text, Date remindDate, int int_id){
         this.id = UUID.randomUUID().toString();
         this.text = text;
         this.done = false;
         this.remindDate = remindDate;
+        this.int_id = int_id;
     }
 
     protected Todo(Parcel in) {
@@ -33,6 +36,7 @@ public class Todo implements Parcelable{
 
         long date = in.readLong();
         remindDate = date == 0 ? null : new Date(date);
+        int_id = in.readInt();
     }
 
     public static final Creator<Todo> CREATOR = new Creator<Todo>() {
@@ -58,5 +62,6 @@ public class Todo implements Parcelable{
         dest.writeString(text);
         dest.writeByte((byte) (done ? 1 : 0));
         dest.writeLong(remindDate != null ? remindDate.getTime() : 0);
+        dest.writeInt(int_id);
     }
 }

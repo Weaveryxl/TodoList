@@ -16,7 +16,7 @@ import com.example.weaver.todolist.models.Todo;
 public class AlarmReceiver extends BroadcastReceiver{
     @Override
     public void onReceive(Context context, Intent intent) {
-        final int notificationId = 100;
+        //final int notificationId = 100;
         Todo todo = intent.getParcelableExtra(TodoEditActivity.KEY_TODO);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
@@ -24,11 +24,13 @@ public class AlarmReceiver extends BroadcastReceiver{
                 .setContentTitle(todo.text)
                 .setContentText(todo.text);
 
+        int notificationId = todo.int_id;
+
         Intent resultIntent = new Intent(context, TodoEditActivity.class);
         resultIntent.putExtra(TodoEditActivity.KEY_TODO, todo);
         resultIntent.putExtra(TodoEditActivity.KEY_NOTIFICATION_ID, notificationId);
 
-        PendingIntent resultPendingIntent = PendingIntent.getActivity(context, 0,
+        PendingIntent resultPendingIntent = PendingIntent.getActivity(context, todo.int_id,
                                                                         resultIntent,
                                                                         PendingIntent.FLAG_UPDATE_CURRENT);
 

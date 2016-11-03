@@ -12,11 +12,16 @@ import com.example.weaver.todolist.models.Todo;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
 /**
  * Created by Weaver on 2016/10/13.
  */
+
+
 public class AlarmUtils {
+
+    public static HashMap<Integer, Integer> hashMap = new HashMap<Integer, Integer>();
 
     public static void setAlarm(@NonNull Context context, @NonNull Todo todo) {
         Calendar c = Calendar.getInstance();
@@ -28,7 +33,7 @@ public class AlarmUtils {
 
         Intent intent = new Intent(context, AlarmReceiver.class);
         intent.putExtra(TodoEditActivity.KEY_TODO, todo);
-        PendingIntent alarmIntent = PendingIntent.getBroadcast(context,0,
+        PendingIntent alarmIntent = PendingIntent.getBroadcast(context,todo.int_id,
                                                                 intent,
                                                                 PendingIntent.FLAG_UPDATE_CURRENT);
         //What is broadcast? what's the different with service and activity?

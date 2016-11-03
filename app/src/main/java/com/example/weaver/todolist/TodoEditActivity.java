@@ -28,6 +28,8 @@ import com.example.weaver.todolist.utils.UIUtils;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Random;
+
 
 /**
  * Created by Xiaolong on 2016/9/16.
@@ -203,7 +205,14 @@ public class TodoEditActivity extends AppCompatActivity implements
     //10/10 continue here
     private void saveAndExit() {
         if (todo == null) {
-            todo = new Todo(todoEdit.getText().toString(), remindDate);
+            Random random = new Random();
+            int int_id = random.nextInt(Integer.MAX_VALUE);
+            while ( AlarmUtils.hashMap.containsKey(int_id) && AlarmUtils.hashMap.get(int_id)== 1){
+                int_id = random.nextInt(Integer.MAX_VALUE);
+            }
+            todo = new Todo(todoEdit.getText().toString(), remindDate, int_id);
+            AlarmUtils.hashMap.put(int_id, 1);
+            //AlarmUtils.list_size += 1;
         }
         else {
             todo.text = todoEdit.getText().toString();
@@ -219,6 +228,7 @@ public class TodoEditActivity extends AppCompatActivity implements
         Intent result = new Intent();
         result.putExtra(KEY_TODO, todo);
         setResult(Activity.RESULT_OK, result);
+
         finish();
     }
 
@@ -226,6 +236,8 @@ public class TodoEditActivity extends AppCompatActivity implements
         Intent result = new Intent();
         result.putExtra(KEY_TODO_ID, todo.id);
         setResult(Activity.RESULT_OK, result);
+        AlarmUtils.hashMap.put(todo.int_id, 0);
+        //AlarmUtils.list_size -= 1;
         finish();
     }
 
