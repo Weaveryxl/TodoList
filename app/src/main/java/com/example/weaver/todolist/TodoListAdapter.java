@@ -2,6 +2,7 @@ package com.example.weaver.todolist;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +21,7 @@ import java.util.List;
 /**
  * Created by Weaver on 2016/9/5.
  */
-public class TodoListAdapter extends ViewHolderAdapter{
+public class TodoListAdapter extends RecyclerView.Adapter{
 
     private MainActivity activity;
     private List<Todo> data;
@@ -30,20 +31,6 @@ public class TodoListAdapter extends ViewHolderAdapter{
         this.data = data;
     }
 
-    @Override
-    public int getCount() {
-        return data.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return data.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
     /*
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
@@ -89,13 +76,13 @@ public class TodoListAdapter extends ViewHolderAdapter{
     }
     */
     @Override
-    protected ViewHolderAdapter.ViewHolder onCreateViewHolder(int position, ViewGroup parent) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int position) {
         View view = LayoutInflater.from(activity).inflate(R.layout.todo_list_item, parent, false);
         return new TodoViewHolder(view);
     }
 
     @Override
-    protected void onBindViewHolder(final int position, ViewHolder viewHolder) {
+    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, final int position) {
         final Todo todo = data.get(position);
         TodoViewHolder vh = ((TodoViewHolder) viewHolder);
         vh.todoText.setText(todo.text);
@@ -109,7 +96,7 @@ public class TodoListAdapter extends ViewHolderAdapter{
             }
         });
 
-        vh.view.setOnClickListener(new View.OnClickListener() {
+        vh.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(activity, TodoEditActivity.class);
@@ -119,7 +106,12 @@ public class TodoListAdapter extends ViewHolderAdapter{
         });
     }
 
-    private static class TodoViewHolder extends ViewHolderAdapter.ViewHolder{
+    @Override
+    public int getItemCount() {
+        return data.size();
+    }
+
+    private static class TodoViewHolder extends RecyclerView.ViewHolder{
         TextView todoText;
         CheckBox doneCheckbox;
 
@@ -130,4 +122,5 @@ public class TodoListAdapter extends ViewHolderAdapter{
         }
 
     }
+
 }
