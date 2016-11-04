@@ -113,9 +113,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadData() {
         todos = ModelUtils.read(this, TODOS, new TypeToken<List<Todo>>(){});
-        todos = ModelUtils.read(this, NOTIFICATIONS, new TypeToken<HashMap<Integer, Integer>>(){});
+        AlarmUtils.hashMap = ModelUtils.read(this, NOTIFICATIONS, new TypeToken<HashMap<Integer, Integer>>(){});
         if (todos == null) {
             todos = new ArrayList<>();
+        }
+        if (AlarmUtils.hashMap == null) {
+            AlarmUtils.hashMap = new HashMap<Integer, Integer>();
         }
     }
 

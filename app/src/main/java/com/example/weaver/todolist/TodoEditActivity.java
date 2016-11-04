@@ -206,9 +206,10 @@ public class TodoEditActivity extends AppCompatActivity implements
     private void saveAndExit() {
         if (todo == null) {
             Random random = new Random();
-            int int_id = random.nextInt(Integer.MAX_VALUE);
+            int int_id = random.nextInt(1000);
             while ( AlarmUtils.hashMap.containsKey(int_id) && AlarmUtils.hashMap.get(int_id)== 1){
-                int_id = random.nextInt(Integer.MAX_VALUE);
+
+                int_id = random.nextInt(1000);
             }
             todo = new Todo(todoEdit.getText().toString(), remindDate, int_id);
             AlarmUtils.hashMap.put(int_id, 1);
