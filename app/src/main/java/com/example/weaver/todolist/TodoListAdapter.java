@@ -31,6 +31,8 @@ public class TodoListAdapter extends RecyclerView.Adapter{
         this.data = data;
     }
 
+    private boolean onBind;
+
     /*
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
@@ -78,7 +80,7 @@ public class TodoListAdapter extends RecyclerView.Adapter{
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int position) {
         View view = LayoutInflater.from(activity).inflate(R.layout.todo_list_item, parent, false);
-        return new TodoViewHolder(view);
+        return new TodoViewHolder(view, activity, onBind);
     }
 
     @Override
@@ -86,16 +88,18 @@ public class TodoListAdapter extends RecyclerView.Adapter{
         final Todo todo = data.get(position);
         TodoViewHolder vh = ((TodoViewHolder) viewHolder);
         vh.todoText.setText(todo.text);
+        onBind = true;
         vh.doneCheckbox.setChecked(todo.done);
         UIUtils.setTextViewStrikeThrough(vh.todoText, todo.done);
-
+        onBind = false;
+        /*
         vh.doneCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 activity.updateTodo(position, isChecked);
             }
         });
-
+        */
         vh.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,10 +119,18 @@ public class TodoListAdapter extends RecyclerView.Adapter{
         TextView todoText;
         CheckBox doneCheckbox;
 
-        public TodoViewHolder(View view) {
+        public TodoViewHolder(View view, final MainActivity activity, final boolean onBind) {
             super(view);
             todoText = (TextView) view.findViewById(R.id.to_do_list_text);
             doneCheckbox = (CheckBox) view.findViewById(R.id.todo_list_item_check);
+            doneCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (onBind) {
+                        activity.updateTodo(getLayoutPosition(), isChecked);
+                    }
+                }
+            });
         }
 
     }
