@@ -80,15 +80,15 @@ public class TodoListAdapter extends RecyclerView.Adapter{
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int position) {
         View view = LayoutInflater.from(activity).inflate(R.layout.todo_list_item, parent, false);
-        return new TodoViewHolder(view, activity, onBind);
+        return new TodoViewHolder(view, activity);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, final int position) {
         final Todo todo = data.get(position);
         TodoViewHolder vh = ((TodoViewHolder) viewHolder);
-        vh.todoText.setText(todo.text);
         onBind = true;
+        vh.todoText.setText(todo.text);
         vh.doneCheckbox.setChecked(todo.done);
         UIUtils.setTextViewStrikeThrough(vh.todoText, todo.done);
         onBind = false;
@@ -115,18 +115,18 @@ public class TodoListAdapter extends RecyclerView.Adapter{
         return data.size();
     }
 
-    private static class TodoViewHolder extends RecyclerView.ViewHolder{
+    private class TodoViewHolder extends RecyclerView.ViewHolder{
         TextView todoText;
         CheckBox doneCheckbox;
 
-        public TodoViewHolder(View view, final MainActivity activity, final boolean onBind) {
+        public TodoViewHolder(View view, final MainActivity activity) {
             super(view);
             todoText = (TextView) view.findViewById(R.id.to_do_list_text);
             doneCheckbox = (CheckBox) view.findViewById(R.id.todo_list_item_check);
             doneCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (onBind) {
+                    if (!onBind) {
                         activity.updateTodo(getLayoutPosition(), isChecked);
                     }
                 }
