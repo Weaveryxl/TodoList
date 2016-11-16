@@ -2,6 +2,7 @@ package com.example.weaver.todolist;
 
 import android.app.Activity;
 import android.content.Intent;
+
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ListView;
+
 
 import com.example.weaver.todolist.models.Todo;
 import com.example.weaver.todolist.utils.AlarmUtils;
@@ -29,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String NOTIFICATIONS = "notifications";
 
-    private TodoListAdapter adapter;
+    public static TodoListAdapter adapter;
     private List<Todo> todos;
 
     @Override
@@ -46,13 +48,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        loadData();
-
+        loadData(); // read from json
         adapter = new TodoListAdapter(this, todos);
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.main_recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
+
+        //RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+
+
         //setupUI(mockData());
+
+
+        setupFragment();
+    }
+
+    private void setupFragment() {
+        TodoListFragment todoListFragment = new TodoListFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.fragment_container, todoListFragment)
+                .commit();
     }
 
     @Override
@@ -121,21 +134,7 @@ public class MainActivity extends AppCompatActivity {
             AlarmUtils.hashMap = new HashMap<Integer, Integer>();
         }
     }
-
-    /*
-    private void setupUI(@NonNull List<Todo> todos){
-        ListView listView = (ListView) findViewById(R.id.list_view);
-        TodoListAdapter adapter = new TodoListAdapter(this, todos);
-        listView.setAdapter(adapter);
+    public  List<Todo> get_todo() {
+        return todos;
     }
-
-    @NonNull
-    private List<Todo> mockData(){
-        List<Todo> list = new ArrayList<>();
-        for (int i = 0; i < 1000; i++){
-            list.add(new Todo("todo" + i));
-        }
-        return list;
-    }
-*/
 }

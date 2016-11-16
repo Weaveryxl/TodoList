@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.NonNull;
 
 import com.example.weaver.todolist.AlarmReceiver;
@@ -37,8 +38,15 @@ public class AlarmUtils {
                                                                 intent,
                                                                 PendingIntent.FLAG_UPDATE_CURRENT);
         //What is broadcast? what's the different with service and activity?
-        alarmManager.set(AlarmManager.RTC_WAKEUP,
-                            todo.remindDate.getTime(),
-                            alarmIntent);
+        if (Build.VERSION.SDK_INT >= 19) {
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP,
+                                todo.remindDate.getTime(),
+                                alarmIntent);
+        }
+        else {
+            alarmManager.set(AlarmManager.RTC_WAKEUP,
+                    todo.remindDate.getTime(),
+                    alarmIntent);
+        }
     }
 }
