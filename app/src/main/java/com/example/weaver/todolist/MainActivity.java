@@ -56,8 +56,9 @@ public class MainActivity extends AppCompatActivity {
 
         //setupUI(mockData());
 
-
-        setupFragment();
+        if (savedInstanceState == null) { // if there's already instance, don't setup
+            setupFragment();
+        }
     }
 
     private void setupFragment() {
