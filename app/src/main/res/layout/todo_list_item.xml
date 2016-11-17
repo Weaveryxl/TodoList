@@ -24,10 +24,5 @@
             android:layout_marginLeft="@dimen/spacing_xsmall"
             tools:text = "Task 1"/>
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#FFC4C4C4"/>
 </LinearLayout>
 
